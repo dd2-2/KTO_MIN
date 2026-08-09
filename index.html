@@ -366,7 +366,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
 </div>
 
 <div class="tagbar" id="tagbar">
-  <span class="label">자주 사용된 태그</span>
+  <span class="label">자주 사용된 태그 (복수 선택 가능)</span>
 </div>
 
 <main>
@@ -468,7 +468,7 @@ const el = {
   resultCount: document.getElementById('resultCount'),
 };
 
-let activeTag = '';
+const activeTags = new Set();
 
 DATA.forEach((c, i) => { c._id = i; c._hay = [c.t, c.g.join(' '), c.d, c.h, c.r, c.o].join(' ').toLowerCase(); });
 
@@ -504,8 +504,8 @@ el.tagbar.addEventListener('click', (e) => {
   const btn = e.target.closest('.tagchip');
   if (!btn) return;
   const t = btn.dataset.tag;
-  activeTag = activeTag === t ? '' : t;
-  el.tagbar.querySelectorAll('.tagchip').forEach(b => b.classList.toggle('active', b.dataset.tag === activeTag));
+  if (activeTags.has(t)) activeTags.delete(t); else activeTags.add(t);
+  btn.classList.toggle('active', activeTags.has(t));
   render();
 });
 
@@ -521,7 +521,7 @@ function render() {
     if (major && c.a !== major) return false;
     if (minor && c.b !== minor) return false;
     if (sub && c.s !== sub) return false;
-    if (activeTag && !c.g.includes(activeTag)) return false;
+    if (activeTags.size && ![...activeTags].every(t => c.g.includes(t))) return false;
     if (q && !c._hay.includes(q)) return false;
     return true;
   });
