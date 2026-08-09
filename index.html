@@ -90,8 +90,14 @@ header{
   color:var(--text-muted);
   border-left:1px solid var(--border);
   white-space:nowrap;
+  font-family:var(--sans);
+  background:none;
+  border-top:none; border-right:none; border-bottom:none;
+  cursor:pointer;
 }
 .hstat:first-child{border-left:none;}
+.hstat:hover{background:var(--surface);}
+.hstat.active{background:var(--accent-bg);}
 .hstat b{font-family:var(--mono); font-size:14.5px; font-weight:800; color:var(--text); font-variant-numeric:tabular-nums;}
 .hstat b.c-open{color:var(--accent);}
 .hstat b.c-job{color:var(--slate);}
@@ -412,11 +418,20 @@ document.getElementById('statTiles').innerHTML =
     '<div class="stat ' + label + '"><div class="n">' + n.toLocaleString() + '</div><div class="l">' + label + '</div></div>'
   ).join('');
 const HSTAT_CLASS = { 공개강좌:'c-open', 직무강좌:'c-job', 맞춤강좌:'c-custom' };
-document.getElementById('headStats').innerHTML =
-  '<div class="hstat"><b>' + DASHBOARD.total.toLocaleString() + '</b>전체 강좌</div>' +
+const headStatsEl = document.getElementById('headStats');
+headStatsEl.innerHTML =
+  '<button type="button" class="hstat active" data-major=""><b>' + DASHBOARD.total.toLocaleString() + '</b>전체 강좌</button>' +
   DASHBOARD.byMajorArr.map(([label, n]) =>
-    '<div class="hstat"><b class="' + (HSTAT_CLASS[label] || '') + '">' + n.toLocaleString() + '</b>' + label + '</div>'
+    '<button type="button" class="hstat" data-major="' + label + '"><b class="' + (HSTAT_CLASS[label] || '') + '">' + n.toLocaleString() + '</b>' + label + '</button>'
   ).join('');
+headStatsEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('.hstat');
+  if (!btn) return;
+  el.fMajor.value = btn.dataset.major;
+  headStatsEl.querySelectorAll('.hstat').forEach(b => b.classList.toggle('active', b === btn));
+  updateMinorOptions();
+  render();
+});
 renderBarList('chartMinor', DASHBOARD.byMinorArr);
 renderBarList('chartSubType', DASHBOARD.bySubTypeArr);
 renderBarList('chartTags', DASHBOARD.topTagsForChart.map(([t, n]) => ['#' + t, n]));
