@@ -333,7 +333,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
   <div class="head-right">
     <button id="summaryBtn" type="button">요약 보기</button>
     <button id="themeBtn" type="button">라이트 모드</button>
-    <a id="dlBtn" href="https://docs.google.com/spreadsheets/d/1bZ0FGCRKhvbIX3BkqPsbWKZYghxcp37u/export?format=xlsx" target="_blank" rel="noopener">⬇ 엑셀로 다운로드</a>
+    <a id="dlBtn" href="https://raw.githubusercontent.com/dd2-2/KTO_MIN/main/touredu_%EA%B0%95%EC%A2%8C%EC%B9%B4%ED%83%88%EB%A1%9C%EA%B7%B8_%EC%A0%84%EC%B2%B4_2026-08-09.xlsx" target="_blank" rel="noopener">⬇ 엑셀로 다운로드</a>
     <button id="shareBtn" type="button">🔗 공유</button>
     <input id="shareFallback" type="text" readonly>
   </div>
@@ -423,7 +423,7 @@ renderBarList('chartTags', DASHBOARD.topTagsForChart.map(([t, n]) => ['#' + t, n
 const shareBtn = document.getElementById('shareBtn');
 const shareFallback = document.getElementById('shareFallback');
 shareBtn.addEventListener('click', async () => {
-  const url = 'https://claude.ai/code/artifact/416ab0d5-d2c8-4c9a-9ab6-75e331859a56';
+  const url = 'https://dd2-2.github.io/KTO_MIN/';
   let copied = false;
   try {
     await navigator.clipboard.writeText(url);
