@@ -116,6 +116,12 @@ header{
   white-space:nowrap;
 }
 #themeBtn:hover, #summaryBtn:hover, #shareBtn:hover{border-color:var(--accent);}
+/* 테마 버튼은 항상 "지금과 반대되는 테마"의 색을 입혀서 눈에 확 띄게 함
+   (다크모드일 땐 라이트톤 버튼, 라이트모드일 땐 다크톤 버튼) */
+#themeBtn{background:#EFEFEF; color:#1A1A1A; border-color:#DCDCDC; font-weight:700;}
+#themeBtn:hover{border-color:#1A1A1A;}
+:root[data-theme="light"] #themeBtn{background:#232323; color:#ECECEC; border-color:#323232;}
+:root[data-theme="light"] #themeBtn:hover{border-color:#ECECEC;}
 #shareFallback{
   margin-left:6px;
   font-size:11.5px;
@@ -401,7 +407,7 @@ function applyTheme(mode) {
   else { root.setAttribute('data-theme', 'dark'); themeBtn.textContent = '라이트 모드'; }
   localStorage.setItem('touredu_theme', mode);
 }
-applyTheme(localStorage.getItem('touredu_theme') || 'dark');
+applyTheme(localStorage.getItem('touredu_theme') || 'light');
 themeBtn.addEventListener('click', () => {
   applyTheme(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
 });
