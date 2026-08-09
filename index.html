@@ -561,7 +561,9 @@ el.list.addEventListener('click', (e) => {
   // 상세 내용 드래그로 텍스트 복사할 때 선택이 풀리면서 카드가 접히는 문제 방지
   if (e.target.closest('.row-detail')) return;
   if (window.getSelection().toString().length > 0) return;
-  row.classList.toggle('open');
+  const wasOpen = row.classList.contains('open');
+  el.list.querySelectorAll('.row.open').forEach(r => r.classList.remove('open'));
+  if (!wasOpen) row.classList.add('open');
 });
 
 el.search.addEventListener('input', render);
