@@ -179,7 +179,14 @@ select{
   font-size:13px;
   padding:7px 9px;
   border-radius:7px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
+/* 선택된 옵션 글자 수에 따라 폭이 늘었다 줄었다 하지 않도록 최대 폭 기준 고정 */
+#fMajor{width:110px;}
+#fMinor{width:150px;}
+#fSub{width:190px;}
 select:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
 #resultCount{
   font-family:var(--mono);
@@ -493,7 +500,10 @@ function uniqueSorted(arr) { return [...new Set(arr.filter(Boolean))].sort((a,b)
 function fillSelect(sel, values, placeholder) {
   sel.innerHTML = '<option value="">' + placeholder + '</option>' +
     values.map(v => '<option value="' + v.replace(/"/g,'&quot;') + '">' + v + '</option>').join('');
+  sel.dataset.placeholder = placeholder;
+  sel.title = sel.value || placeholder;
 }
+function syncSelectTitle(sel) { sel.title = sel.value || sel.dataset.placeholder || ''; }
 fillSelect(el.fMajor, uniqueSorted(DATA.map(c => c.a)), '대분류 전체');
 
 function updateMinorOptions() {
@@ -582,9 +592,9 @@ el.list.addEventListener('click', (e) => {
 });
 
 el.search.addEventListener('input', render);
-el.fMajor.addEventListener('change', () => { updateMinorOptions(); render(); });
-el.fMinor.addEventListener('change', () => { updateSubOptions(); render(); });
-el.fSub.addEventListener('change', render);
+el.fMajor.addEventListener('change', () => { syncSelectTitle(el.fMajor); updateMinorOptions(); render(); });
+el.fMinor.addEventListener('change', () => { syncSelectTitle(el.fMinor); updateSubOptions(); render(); });
+el.fSub.addEventListener('change', () => { syncSelectTitle(el.fSub); render(); });
 
 render();
 </script>
