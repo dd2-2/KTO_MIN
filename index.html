@@ -1,6 +1,6 @@
-<title>관광e배움터_카테고리별 정리</title>
+<title>관광e배움터 강좌조회</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css">
 <style>
 :root{
   --bg:#202124;
@@ -190,7 +190,7 @@ select{
 #fSub{width:190px;}
 select:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
 #resultCount{
-  font-family:var(--mono);
+  font-family:var(--sans);
   font-size:12.5px;
   color:var(--text-muted);
   white-space:nowrap;
@@ -210,7 +210,7 @@ select:focus-visible{outline:2px solid var(--accent); outline-offset:1px;}
 }
 .tagbar .label{font-size:11px; color:var(--text-muted); margin-right:2px; flex:0 0 auto;}
 .tagchip{
-  font-family:var(--mono);
+  font-family:var(--sans);
   font-size:11px;
   color:var(--text-muted);
   background:var(--surface);
@@ -233,7 +233,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
 .row:hover{background:var(--surface);}
 .row-head{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
 .chip{
-  font-family:var(--mono);
+  font-family:var(--sans);
   font-size:10.5px;
   font-weight:700;
   letter-spacing:0.03em;
@@ -245,9 +245,9 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
 .chip.직무강좌{background:var(--slate-bg); color:var(--slate);}
 .chip.맞춤강좌{background:var(--gold-bg); color:var(--gold);}
 .row-minor{font-size:12px; color:var(--text-muted);}
-.row-sub{font-size:11.5px; color:var(--text-muted); font-family:var(--mono);}
+.row-sub{font-size:11.5px; color:var(--text-muted); font-family:var(--sans);}
 .row-title{font-size:15px; font-weight:600; margin-top:4px;}
-.row-tags{font-size:11.5px; color:var(--text-muted); margin-top:4px; font-family:var(--mono);}
+.row-tags{font-size:11.5px; color:var(--text-muted); margin-top:4px; font-family:var(--sans);}
 .row-detail{
   display:none;
   margin-top:9px;
@@ -400,7 +400,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
 .sf-col-item.selected .tag{background:rgba(255,255,255,0.25); color:var(--accent-ink);}
 .sf-col-item.selected .sf-badge{background:rgba(255,255,255,0.25); color:var(--accent-ink);}
 .sf-col-item .nm{font-size:13.5px; font-weight:600; flex:1 1 auto; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-.sf-col-item .meta{font-size:11px; color:var(--text-muted); font-family:var(--mono); white-space:nowrap; flex:0 0 auto;}
+.sf-col-item .meta{font-size:11px; color:var(--text-muted); font-family:var(--sans); white-space:nowrap; flex:0 0 auto;}
 .sf-col-item .tag{font-size:10px; padding:1px 6px; border-radius:99px; background:var(--surface-2); color:var(--text-muted); white-space:nowrap; flex:0 0 auto;}
 .sf-col-item .chev{color:var(--text-muted); flex:0 0 auto; font-size:11px;}
 .sf-group-head{display:flex; align-items:center; gap:8px; width:100%; padding:8px 12px; border:none; border-bottom:1px solid var(--border); background:var(--surface-2); cursor:pointer; font-family:var(--sans); color:var(--text); text-align:left;}
@@ -410,7 +410,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
 .sf-group-head .nm{flex:1 1 auto; font-size:12.5px; font-weight:700;}
 .sf-group-head .cnt{font-size:11px; color:var(--text-muted); font-family:var(--mono);}
 .sf-col-placeholder, .sf-empty{padding:30px 16px; text-align:center; color:var(--text-muted); font-size:13px;}
-.sf-badge{font-family:var(--mono); font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:99px; background:var(--accent-bg); color:var(--accent); flex:0 0 auto;}
+.sf-badge{font-family:var(--sans); font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:99px; background:var(--accent-bg); color:var(--accent); flex:0 0 auto;}
 .sf-badge-pr1{background:var(--accent-bg); color:var(--accent);}
 .sf-badge-pr2{background:var(--gold-bg); color:var(--gold);}
 .sf-badge-pr3{background:var(--slate-bg); color:var(--slate);}
@@ -515,7 +515,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
   <div class="sf-columns">
     <div class="sf-col" id="sfColSchool">
       <div class="sf-col-head">
-        <input id="sfSchoolSearch" class="sf-search" type="text" placeholder="학교명 검색 (예: 한양대학교)" autocomplete="off">
+        <input id="sfSchoolSearch" class="sf-search" type="text" placeholder="학교명 검색" autocomplete="off">
       </div>
       <div class="sf-col-body" id="sfSchoolList"></div>
     </div>
