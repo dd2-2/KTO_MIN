@@ -882,7 +882,7 @@ function sfRenderCourses() {
   const cards = (CAT_COURSES[cat] || [])
     .map(([title, pr]) => (title in TITLE2ID) ? { c: DATA[TITLE2ID[title]], pr } : null)
     .filter(Boolean);
-  sf.courseIntro.innerHTML = '<b>' + escapeHtml(dept[0]) + '</b> 학과는 <b>' + escapeHtml(cat) + '</b> 분야와 연관도가 높습니다 (연관 점수 ' + dept[2] + '점) · 관련 강좌 ' + cards.length.toLocaleString() + '건';
+  sf.courseIntro.innerHTML = '<b>' + escapeHtml(dept[0]) + '</b> 학과는 <b>' + escapeHtml(cat) + '</b> 분야와 연관도가 높습니다 · 관련 강좌 ' + cards.length.toLocaleString() + '건';
   sf.courseList.innerHTML = cards.length
     ? cards.map(({ c, pr }) => courseCardHTML(c, SF_PR_LABEL[pr] || '', false, pr)).join('')
     : '<div class="sf-empty">연결된 강좌가 아직 없습니다.</div>';
