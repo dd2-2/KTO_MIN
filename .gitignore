@@ -1,5 +1,15 @@
+# Local development
+_serve.py
 _serve.log
-outputs/**/*.inspect.ndjson
-outputs/new-chat-2/*.xlsx
+
+# Generated scratch output
+outputs/
 *.inspect.ndjson
 ~$*.xlsx
+
+# Local reference files
+*.hwpx
+*.pptx
+*.pdf
+관광e배움터_강좌연계_학교정보_대학교_중고등학교.xlsx
+관광e배움터_투트랙_카테고리_분류분석.xlsx
