@@ -1,0 +1,3 @@
+_serve.log
+outputs/**/*.inspect.ndjson
+~$*.xlsx
