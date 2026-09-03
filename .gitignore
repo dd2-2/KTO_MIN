@@ -1,3 +1,5 @@
 _serve.log
 outputs/**/*.inspect.ndjson
+outputs/new-chat-2/*.xlsx
+*.inspect.ndjson
 ~$*.xlsx

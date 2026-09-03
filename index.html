@@ -357,8 +357,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
 /* ---- 홈: 사용자 유형별 분기 ---- */
 .home-hero{flex:1 1 auto; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px; padding:40px 24px; overflow-y:auto;}
 .home-heading{text-align:center;}
-.home-eyebrow{font-size:13px; font-weight:700; color:var(--accent); letter-spacing:0;}
-.home-title{margin:7px 0 0; font-size:30px; line-height:1.25; color:var(--text); letter-spacing:0;}
+.home-eyebrow{font-size:30px; line-height:1.25; font-weight:800; color:var(--text); letter-spacing:0;}
 .home-cards{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; width:100%; max-width:1080px;}
 .home-card{
   min-width:0; min-height:230px;
@@ -396,7 +395,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
 .audience-change:hover{color:var(--text); border-color:var(--text-muted);}
 @media (max-width: 720px){
   .home-hero{justify-content:flex-start; gap:20px; padding:28px 16px;}
-  .home-title{font-size:25px;}
+  .home-eyebrow{font-size:25px;}
   .home-cards{grid-template-columns:1fr; max-width:420px; gap:10px;}
   .home-card{min-height:142px; padding:20px; gap:8px;}
   .home-card-icon{width:38px; height:38px; border-radius:8px;}
@@ -507,7 +506,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
   <div class="head-right">
     <button id="mobilePreviewBtn" type="button">모바일</button>
     <button id="themeBtn" type="button">라이트</button>
-    <a id="dlBtn" href="https://raw.githubusercontent.com/dd2-2/KTO_MIN/main/%EA%B4%80%EA%B4%91e%EB%B0%B0%EC%9B%80%ED%84%B0_%EB%8D%B0%EC%9D%B4%ED%84%B0.xlsx" target="_blank" rel="noopener">⬇ 엑셀</a>
+    <a id="dlBtn" href="https://raw.githubusercontent.com/dd2-2/KTO_MIN/main/%EA%B4%80%EA%B4%91e%EB%B0%B0%EC%9B%80%ED%84%B0_%EB%A7%9E%EC%B6%A4%EC%B6%94%EC%B2%9C_%ED%86%B5%ED%95%A9%EC%A0%95%EB%A6%AC%EB%B3%B8.xlsx" target="_blank" rel="noopener">⬇ 엑셀</a>
     <button id="shareBtn" type="button" aria-label="공유 링크 복사" title="공유 링크 복사">🔗</button>
     <input id="shareFallback" type="text" readonly>
   </div>
@@ -517,7 +516,6 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
   <div class="home-hero">
     <div class="home-heading">
       <div class="home-eyebrow">관광 분야 맞춤 강좌 추천</div>
-      <h1 class="home-title">나에게 맞는 시작점</h1>
     </div>
     <div class="home-cards">
       <button type="button" class="home-card home-card-secondary" data-mode="student" data-audience="career">
@@ -910,6 +908,17 @@ function render() {
   el.list.innerHTML = filtered.slice(0, 2000).map(c => courseCardHTML(c, '', openIds.has(String(c._id)))).join('');
 }
 
+function courseReset() {
+  el.search.value = '';
+  el.fMajor.value = '';
+  syncSelectTitle(el.fMajor);
+  updateMinorOptions();
+  activeTags.clear();
+  el.tagbar.querySelectorAll('.tagchip.active').forEach(button => button.classList.remove('active'));
+  el.list.querySelectorAll('.row.open').forEach(row => row.classList.remove('open'));
+  render();
+}
+
 attachRowToggle(el.list);
 
 el.search.addEventListener('input', render);
@@ -926,6 +935,7 @@ const courseView = document.getElementById('courseView');
 const schoolView = document.getElementById('schoolView');
 const studentAudienceStrip = document.getElementById('studentAudienceStrip');
 const studentAudienceTitle = document.getElementById('studentAudienceTitle');
+let currentMode = 'home';
 function setAudience(audience) {
   const studentLabels = {
     career: ['취업 맞춤 추천', '관심 직군 검색']
@@ -938,6 +948,12 @@ function setAudience(audience) {
   }
 }
 function setMode(mode) {
+  if (currentMode !== mode) {
+    if (currentMode === 'student') stReset();
+    if (currentMode === 'startup') suReset();
+    if (currentMode === 'school') sfReset();
+    if (currentMode === 'course') courseReset();
+  }
   modeTabs.querySelectorAll('button[data-mode]').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
   homeView.style.display = mode === 'home' ? 'flex' : 'none';
   studentView.style.display = mode === 'student' ? 'flex' : 'none';
@@ -945,20 +961,17 @@ function setMode(mode) {
   courseView.style.display = mode === 'course' ? 'flex' : 'none';
   schoolView.style.display = mode === 'school' ? 'flex' : 'none';
   localStorage.setItem('touredu_mode', mode);
+  currentMode = mode;
 }
 modeTabs.addEventListener('click', (e) => {
   const b = e.target.closest('button[data-mode]');
   if (!b) return;
   setAudience(b.dataset.audience || null);
-  if (b.dataset.mode === 'student') stReset();
-  if (b.dataset.mode === 'startup') suReset();
   setMode(b.dataset.mode);
 });
 document.querySelectorAll('.home-card').forEach(p => {
   p.addEventListener('click', () => {
     setAudience(p.dataset.audience);
-    if (p.dataset.mode === 'student') stReset();
-    if (p.dataset.mode === 'startup') suReset();
     setMode(p.dataset.mode);
   });
 });
@@ -1533,6 +1546,20 @@ function sfRenderPathbar() {
 
 const sfExpandedRegions = new Set();
 
+function sfReset() {
+  sfSchoolIdx = null;
+  sfDeptIdx = null;
+  sfExpandedRegions.clear();
+  sf.schoolSearch.value = '';
+  sf.deptSearch.disabled = true;
+  sf.deptSearch.value = '';
+  sfRenderSchoolList('');
+  sf.deptList.innerHTML = '<div class="sf-col-placeholder">왼쪽에서 학교를 선택하세요</div>';
+  sf.courseIntro.textContent = SF_COURSE_INTRO_DEFAULT;
+  sf.courseList.innerHTML = '<div class="sf-col-placeholder">학과를 선택하세요</div>';
+  sfRenderPathbar();
+}
+
 function sfSchoolItemHTML(o, showRegion) {
   return '<button type="button" class="sf-col-item' + (o.i === sfSchoolIdx ? ' selected' : '') + '" data-idx="' + o.i + '">' +
     '<span class="nm">' + escapeHtml(o.s[1]) + '</span>' +
@@ -1611,7 +1638,12 @@ sf.schoolList.addEventListener('click', (e) => {
   const groupHead = e.target.closest('.sf-group-head');
   if (groupHead) {
     const r = groupHead.dataset.region;
-    if (sfExpandedRegions.has(r)) sfExpandedRegions.delete(r); else sfExpandedRegions.add(r);
+    if (sfExpandedRegions.has(r)) {
+      sfExpandedRegions.delete(r);
+    } else {
+      sfExpandedRegions.clear();
+      sfExpandedRegions.add(r);
+    }
     sfRenderSchoolList(sf.schoolSearch.value);
     return;
   }
@@ -1619,6 +1651,7 @@ sf.schoolList.addEventListener('click', (e) => {
   if (!btn) return;
   sfSchoolIdx = +btn.dataset.idx;
   sfDeptIdx = null;
+  sfExpandedRegions.clear();
   sfExpandedRegions.add(SCHOOLS[sfSchoolIdx][2]);
   sf.deptSearch.disabled = false;
   sf.deptSearch.value = '';
@@ -1646,15 +1679,8 @@ sf.pathbar.addEventListener('click', (e) => {
   if (!btn) return;
   const jump = btn.dataset.jump;
   if (jump === 'root') {
-    sfSchoolIdx = null;
-    sfDeptIdx = null;
-    sf.schoolSearch.value = '';
-    sf.deptSearch.disabled = true;
-    sf.deptSearch.value = '';
-    sfRenderSchoolList('');
-    sf.deptList.innerHTML = '<div class="sf-col-placeholder">왼쪽에서 학교를 선택하세요</div>';
-    sf.courseIntro.textContent = SF_COURSE_INTRO_DEFAULT;
-    sf.courseList.innerHTML = '<div class="sf-col-placeholder">학과를 선택하세요</div>';
+    sfReset();
+    return;
   } else if (jump === 'school') {
     sfDeptIdx = null;
     sfRenderDeptList(sf.deptSearch.value);
