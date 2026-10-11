@@ -251,8 +251,6 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
 .row-minor{font-size:12px; color:var(--text-muted);}
 .row-sub{font-size:11.5px; color:var(--text-muted); font-family:var(--sans);}
 .row-title{font-size:15px; font-weight:600; margin-top:4px;}
-.row-reason{font-size:11.5px; color:var(--teal); margin-top:4px; line-height:1.45;}
-.row-tags{font-size:11.5px; color:var(--text-muted); margin-top:4px; font-family:var(--sans);}
 .row-detail{
   display:none;
   margin-top:9px;
@@ -436,10 +434,6 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
 .sf-group-head .cnt{font-size:11px; color:var(--text-muted); font-family:var(--mono);}
 .sf-col-placeholder, .sf-empty{padding:30px 16px; text-align:center; color:var(--text-muted); font-size:13px;}
 .sf-badge{font-family:var(--sans); font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:99px; background:var(--accent-bg); color:var(--accent); flex:0 0 auto;}
-.fit-badge{font-family:var(--sans); font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:99px; flex:0 0 auto;}
-.fit-core{background:var(--accent-bg); color:var(--accent);}
-.fit-high{background:var(--teal-bg); color:var(--teal);}
-.fit-related{background:var(--gold-bg); color:var(--gold);}
 
 /* ---- 학교로 찾기: 하단 경로 바 (Finder 패스바 참고) ---- */
 .sf-pathbar{flex:0 0 auto; display:flex; align-items:center; gap:6px; padding:6px 16px; border-top:1px solid var(--border); background:var(--surface); font-size:12px; color:var(--text-muted); overflow-x:auto; white-space:nowrap;}
@@ -911,18 +905,13 @@ window.addEventListener('resize', syncMobileTopButton);
 mobileTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 function courseCardHTML(c, recommendation, isOpen) {
-  const tagsPreview = c.g.slice(0, 6).map(t => '#' + t).join(' ') + (c.g.length > 6 ? ' 외 ' + (c.g.length - 6) + '개' : '');
-  const reco = recommendation && typeof recommendation === 'object' ? recommendation : null;
   return '<div class="row' + (isOpen ? ' open' : '') + '" data-id="' + c._id + '">' +
     '<div class="row-head">' +
       '<span class="chip ' + c.a + '">' + c.a + '</span>' +
       '<span class="row-minor">' + escapeHtml(c.b) + '</span>' +
       (c.s ? '<span class="row-sub">' + escapeHtml(c.s) + '</span>' : '') +
-      (reco ? '<span class="fit-badge fit-' + reco.fitKey + '">' + escapeHtml(reco.fit) + '</span>' : '') +
     '</div>' +
     '<div class="row-title">' + escapeHtml(c.t) + '</div>' +
-    (reco && reco.reason ? '<div class="row-reason">추천 근거 · ' + escapeHtml(reco.reason) + '</div>' : '') +
-    (c.g.length ? '<div class="row-tags">' + escapeHtml(tagsPreview) + '</div>' : '') +
     '<div class="row-detail">' +
       '<div class="f"><div class="k">강좌설명</div><div class="v">' + (c.d ? escapeHtml(c.d) : '<span class="empty">정보 없음</span>') + '</div></div>' +
       '<div class="f"><div class="k">강좌목표</div><div class="v">' + (c.o ? escapeHtml(c.o) : '<span class="empty">정보 없음</span>') + '</div></div>' +
@@ -1230,6 +1219,7 @@ function rankRecommendations(categories, options = {}) {
   return DATA
     .map(course => scoreRecommendation(course, categories, options))
     .filter(Boolean)
+    .filter(item => item.fitKey === 'core')
     .sort((a, b) => b.score - a.score || a.c.t.localeCompare(b.c.t, 'ko'))
     .slice(0, options.limit || DATA.length)
     .map((item, index) => ({ ...item, rank: index + 1 }));
@@ -1479,6 +1469,7 @@ function suCoursesFor(sectorIdx, taskIdx = null) {
     return item;
   })
     .filter(Boolean)
+    .filter(item => item.fitKey === 'core')
     .sort((a, b) => b.score - a.score || a.c.t.localeCompare(b.c.t, 'ko'))
     .slice(0, taskIdx === null ? 120 : 80)
     .map((item, index) => ({ ...item, rank: index + 1 }));
