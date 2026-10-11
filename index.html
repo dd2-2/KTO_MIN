@@ -349,8 +349,10 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
 
 /* ---- 뷰 컨테이너 ---- */
 #homeView{display:flex; flex-direction:column; flex:1 1 auto; min-height:0; overflow:hidden;}
+#personalView{display:none; flex-direction:column; flex:1 1 auto; min-height:0; overflow:hidden;}
 #studentView{display:none; flex-direction:column; flex:1 1 auto; min-height:0; overflow:hidden;}
 #startupView{display:none; flex-direction:column; flex:1 1 auto; min-height:0; overflow:hidden;}
+#certView{display:none; flex-direction:column; flex:1 1 auto; min-height:0; overflow:hidden;}
 #courseView{display:none; flex-direction:column; flex:1 1 auto; min-height:0; overflow:hidden;}
 #schoolView{display:none; flex-direction:column; flex:1 1 auto; min-height:0; overflow:hidden;}
 
@@ -359,6 +361,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
 .home-heading{text-align:center;}
 .home-eyebrow{font-size:30px; line-height:1.25; font-weight:800; color:var(--text); letter-spacing:0;}
 .home-cards{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; width:100%; max-width:1080px;}
+.home-cards-2{grid-template-columns:repeat(2,minmax(0,1fr)); max-width:720px;}
 .home-card{
   min-width:0; min-height:230px;
   display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:12px;
@@ -448,7 +451,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
 #mobileTopBtn{display:none;}
 
 @media (max-width: 720px){
-  #studentView, #startupView, #schoolView{overflow:visible; min-height:auto;}
+  #personalView, #studentView, #startupView, #certView, #schoolView{overflow:visible; min-height:auto;}
   .sf-columns{display:block; flex:none; min-height:auto; overflow:visible;}
   .sf-col, .sf-col.sf-col-course{
     width:100%;
@@ -498,8 +501,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
   </div>
   <div class="modetabs" id="modeTabs">
     <button type="button" data-mode="home">홈</button>
-    <button type="button" data-mode="student" data-audience="career">취업 추천</button>
-    <button type="button" data-mode="startup">창업 추천</button>
+    <button type="button" data-mode="personal">개인용</button>
     <button type="button" data-mode="school" data-audience="staff">기관용</button>
     <button type="button" class="active" data-mode="course">전체 강좌</button>
   </div>
@@ -517,24 +519,15 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
     <div class="home-heading">
       <div class="home-eyebrow">관광 분야 맞춤 강좌 추천</div>
     </div>
-    <div class="home-cards">
-      <button type="button" class="home-card home-card-secondary" data-mode="student" data-audience="career">
+    <div class="home-cards home-cards-2">
+      <button type="button" class="home-card home-card-secondary" data-mode="personal">
         <span class="home-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 19.5V5.8A1.8 1.8 0 0 1 5.8 4H11c.6 0 1 .4 1 1v14.5c0-.8-.7-1.5-1.5-1.5H5.8A1.8 1.8 0 0 0 4 19.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 19.5V5.8A1.8 1.8 0 0 0 18.2 4H13c-.6 0-1 .4-1 1v14.5c0-.8.7-1.5 1.5-1.5h4.7a1.8 1.8 0 0 1 1.8 1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.6"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </span>
-        <span class="home-card-kicker">관심 분야별 강좌</span>
-        <span class="home-card-title">취업 맞춤 추천</span>
-        <span class="home-card-desc">희망 직군 중심 추천 강좌</span>
-        <span class="home-card-cta">직군 살펴보기 <b>›</b></span>
-      </button>
-      <button type="button" class="home-card home-card-startup" data-mode="startup" data-audience="startup">
-        <span class="home-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6M10 22h4M8.5 14.5A6 6 0 1 1 15.5 14.5C14.6 15.1 14 16 14 17h-4c0-1-.6-1.9-1.5-2.5Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 2V0.8M4.9 4.9 4 4M19.1 4.9 20 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </span>
-        <span class="home-card-kicker">관광 비즈니스 준비</span>
-        <span class="home-card-title">창업 맞춤 추천</span>
-        <span class="home-card-desc">업종·준비 과제별 추천 강좌</span>
-        <span class="home-card-cta">창업 강좌 찾기 <b>›</b></span>
+        <span class="home-card-kicker">취업·창업·자격증</span>
+        <span class="home-card-title">개인용</span>
+        <span class="home-card-desc">목적에 맞는 개인 맞춤 추천 강좌</span>
+        <span class="home-card-cta">개인 맞춤 추천 보기 <b>›</b></span>
       </button>
       <button type="button" class="home-card home-card-staff" data-mode="school" data-audience="staff">
         <span class="home-card-icon">
@@ -549,13 +542,57 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
   </div>
 </div>
 
+<div id="personalView">
+<div class="audience-strip">
+  <div class="audience-strip-copy">
+    <span class="audience-strip-label">개인 맞춤</span>
+    <strong>취업·창업·자격증</strong>
+  </div>
+  <button type="button" class="audience-change" data-mode="home">대상 변경</button>
+</div>
+  <div class="home-hero">
+    <div class="home-heading">
+      <div class="home-eyebrow">원하는 맞춤 추천을 선택하세요</div>
+    </div>
+    <div class="home-cards">
+      <button type="button" class="home-card home-card-secondary" data-mode="student" data-audience="career">
+        <span class="home-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 19.5V5.8A1.8 1.8 0 0 1 5.8 4H11c.6 0 1 .4 1 1v14.5c0-.8-.7-1.5-1.5-1.5H5.8A1.8 1.8 0 0 0 4 19.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 19.5V5.8A1.8 1.8 0 0 0 18.2 4H13c-.6 0-1 .4-1 1v14.5c0-.8.7-1.5 1.5-1.5h4.7a1.8 1.8 0 0 1 1.8 1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="home-card-kicker">관심 분야별 강좌</span>
+        <span class="home-card-title">취업용</span>
+        <span class="home-card-desc">희망 직군 중심 추천 강좌</span>
+        <span class="home-card-cta">직군 살펴보기 <b>›</b></span>
+      </button>
+      <button type="button" class="home-card home-card-startup" data-mode="startup" data-audience="startup">
+        <span class="home-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6M10 22h4M8.5 14.5A6 6 0 1 1 15.5 14.5C14.6 15.1 14 16 14 17h-4c0-1-.6-1.9-1.5-2.5Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 2V0.8M4.9 4.9 4 4M19.1 4.9 20 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </span>
+        <span class="home-card-kicker">관광 비즈니스 준비</span>
+        <span class="home-card-title">창업용</span>
+        <span class="home-card-desc">업종·준비 과제별 추천 강좌</span>
+        <span class="home-card-cta">창업 강좌 찾기 <b>›</b></span>
+      </button>
+      <button type="button" class="home-card home-card-staff" data-mode="cert" data-audience="cert">
+        <span class="home-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2 4 6v5c0 5 3.4 8.4 8 11 4.6-2.6 8-6 8-11V6l-8-4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="home-card-kicker">취득 준비 지원</span>
+        <span class="home-card-title">자격증용</span>
+        <span class="home-card-desc">자격증별 준비 과정 추천 강좌</span>
+        <span class="home-card-cta">자격증 강좌 찾기 <b>›</b></span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <div id="studentView">
 <div class="audience-strip" id="studentAudienceStrip" hidden>
   <div class="audience-strip-copy">
     <span class="audience-strip-label">개인 맞춤</span>
     <strong id="studentAudienceTitle">취업 맞춤 추천</strong>
   </div>
-  <button type="button" class="audience-change" data-mode="home">대상 변경</button>
+  <button type="button" class="audience-change" data-mode="personal">대상 변경</button>
 </div>
   <div class="sf-columns">
     <div class="sf-col" id="stColCareer">
@@ -584,7 +621,7 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
       <span class="audience-strip-label">관광 비즈니스 준비</span>
       <strong>창업 맞춤 추천</strong>
     </div>
-    <button type="button" class="audience-change" data-mode="home">대상 변경</button>
+    <button type="button" class="audience-change" data-mode="personal">대상 변경</button>
   </div>
   <div class="sf-columns">
     <div class="sf-col" id="suColSector">
@@ -605,6 +642,29 @@ main{flex:1 1 auto; overflow-y:auto; padding:2px 20px 16px;}
     </div>
   </div>
   <div class="sf-pathbar" id="suPathBar"><button type="button" class="current" data-jump="root">창업 분야</button></div>
+</div>
+
+<div id="certView">
+  <div class="audience-strip">
+    <div class="audience-strip-copy">
+      <span class="audience-strip-label">자격증 취득 준비</span>
+      <strong>자격증 맞춤 추천</strong>
+    </div>
+    <button type="button" class="audience-change" data-mode="personal">대상 변경</button>
+  </div>
+  <div class="sf-columns">
+    <div class="sf-col" id="ctColCert">
+      <div class="sf-col-head">
+        <input id="ctCertSearch" class="sf-search" type="text" placeholder="자격증명 검색" autocomplete="off">
+      </div>
+      <div class="sf-col-body" id="ctCertList"></div>
+    </div>
+    <div class="sf-col sf-col-course" id="ctColCourse">
+      <div class="sf-col-head" id="ctCourseIntro">자격증을 선택하면 준비에 필요한 강좌를 추천합니다</div>
+      <div class="sf-col-body" id="ctCourseList"><div class="sf-col-placeholder">자격증을 선택하세요</div></div>
+    </div>
+  </div>
+  <div class="sf-pathbar" id="ctPathBar"><button type="button" class="current" data-jump="root">자격증</button></div>
 </div>
 
 <div id="courseView">
@@ -929,8 +989,10 @@ el.fSub.addEventListener('change', () => { syncSelectTitle(el.fSub); render(); }
 // ---- 모드 탭 (강좌 찾기 / 학교로 찾기) ----
 const modeTabs = document.getElementById('modeTabs');
 const homeView = document.getElementById('homeView');
+const personalView = document.getElementById('personalView');
 const studentView = document.getElementById('studentView');
 const startupView = document.getElementById('startupView');
+const certView = document.getElementById('certView');
 const courseView = document.getElementById('courseView');
 const schoolView = document.getElementById('schoolView');
 const studentAudienceStrip = document.getElementById('studentAudienceStrip');
@@ -951,13 +1013,16 @@ function setMode(mode) {
   if (currentMode !== mode) {
     if (currentMode === 'student') stReset();
     if (currentMode === 'startup') suReset();
+    if (currentMode === 'cert') ctReset();
     if (currentMode === 'school') sfReset();
     if (currentMode === 'course') courseReset();
   }
   modeTabs.querySelectorAll('button[data-mode]').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
   homeView.style.display = mode === 'home' ? 'flex' : 'none';
+  personalView.style.display = mode === 'personal' ? 'flex' : 'none';
   studentView.style.display = mode === 'student' ? 'flex' : 'none';
   startupView.style.display = mode === 'startup' ? 'flex' : 'none';
+  certView.style.display = mode === 'cert' ? 'flex' : 'none';
   courseView.style.display = mode === 'course' ? 'flex' : 'none';
   schoolView.style.display = mode === 'school' ? 'flex' : 'none';
   localStorage.setItem('touredu_mode', mode);
@@ -1074,6 +1139,15 @@ Object.entries(CAT_COURSES).forEach(([category, entries]) => {
 
 function recoNormalize(value) {
   return String(value || '').toLocaleLowerCase('ko').replace(/\s+/g, ' ').trim();
+}
+
+// 추천 화면에 노출되는 분야·과제명에서 'AI' 표기만 제거(매칭용 내부 카테고리 키는 그대로 유지)
+function stripAiLabel(label) {
+  return String(label || '')
+    .replace(/·?\s*AI\s*·?/g, '·')
+    .replace(/^·+|·+$/g, '')
+    .replace(/·{2,}/g, '·')
+    .trim();
 }
 
 function recoHits(text, keywords, limit) {
@@ -1231,7 +1305,7 @@ function stRenderPathbar() {
     html += '<span class="sep">›</span><button type="button" class="' + (stCategoryIdx === null ? 'current' : '') + '" data-jump="career">' + escapeHtml(STUDENT_CAREERS[stCareerIdx][0]) + '</button>';
   }
   if (stCareerIdx !== null && stCategoryIdx !== null) {
-    html += '<span class="sep">›</span><button type="button" class="current" data-jump="category">' + escapeHtml(STUDENT_CAREERS[stCareerIdx][1][stCategoryIdx]) + '</button>';
+    html += '<span class="sep">›</span><button type="button" class="current" data-jump="category">' + escapeHtml(stripAiLabel(STUDENT_CAREERS[stCareerIdx][1][stCategoryIdx])) + '</button>';
   }
   st.pathbar.innerHTML = html;
 }
@@ -1259,7 +1333,7 @@ function stRenderCategoryList(q) {
     .filter(({ category }) => !q || category.includes(q));
   st.categoryList.innerHTML = pool.length ? pool.map(({ category, i }) =>
     '<button type="button" class="sf-col-item' + (i === stCategoryIdx ? ' selected' : '') + '" data-idx="' + i + '">' +
-      '<span class="nm">' + escapeHtml(category) + '</span>' +
+      '<span class="nm">' + escapeHtml(stripAiLabel(category)) + '</span>' +
       '<span class="meta">' + stEntriesForCategory(category).length.toLocaleString() + '</span>' +
       '<span class="chev">›</span>' +
     '</button>'
@@ -1270,7 +1344,7 @@ function stRenderCourses() {
   const career = STUDENT_CAREERS[stCareerIdx];
   const categories = stCategoryIdx === null ? career[1] : [career[1][stCategoryIdx]];
   const cards = stCoursesFor(categories);
-  const selectedName = stCategoryIdx === null ? career[0] : career[1][stCategoryIdx];
+  const selectedName = stCategoryIdx === null ? career[0] : stripAiLabel(career[1][stCategoryIdx]);
   st.courseIntro.innerHTML = '<b>' + escapeHtml(selectedName) + '</b> 관련 추천 강좌 · ' + cards.length.toLocaleString() + '건';
   st.courseList.innerHTML = cards.length
     ? cards.map(item => courseCardHTML(item.c, item, false)).join('')
@@ -1345,7 +1419,7 @@ const STARTUP_TASKS = [
   ['세무·회계·자금', ['세무', '회계', '세금', '부가가치세', '자금', '지원정책', '지원 정책', '융자', '재무']],
   ['마케팅·판매', ['마케팅', '홍보', '브랜딩', '세일즈', '판매', 'sns', '커머스', '유통']],
   ['운영·고객관리', ['운영', '고객응대', '고객관리', '서비스', '예약', '컴플레인', '위생', '안전', '품질']],
-  ['디지털·AI 활용', ['ai', '인공지능', '디지털', '플랫폼', '데이터', '자동화', 'dx', 'ict', '온라인']]
+  ['디지털·자동화 활용', ['ai', '인공지능', '디지털', '플랫폼', '데이터', '자동화', 'dx', 'ict', '온라인']]
 ];
 const STARTUP_SIGNALS = ['창업', '사업계획', '비즈니스모델', '사업자', '관광사업', '지원정책', '프랜차이즈', '수익구조', '세무', '회계', '자금', '투자', '등록', '법무', '노무', '상권', '매출', '사업 운영', '사업운영'];
 const STARTUP_GENERIC_CORE = ['창업공통', '관광 창업', '관광창업', '창업가', '창업 가이드', '사업계획', '비즈니스모델', '법인사업자', '개인사업자', '부가가치세', '재무제표', '세무', '회계', '근로기준', '인사서식'];
@@ -1511,6 +1585,93 @@ su.pathbar.addEventListener('click', (e) => {
     suRenderCourses();
     suRenderPathbar();
   }
+});
+
+// ---- 자격증 맞춤 추천: 자격증 -> 추천강좌 ----
+const CERT_LIST = [
+  ['관광통역안내사', ['관광안내·해설·통역', '외국인·인바운드']],
+  ['국내여행안내사', ['여행·투어', '지역·로컬관광']],
+  ['국외여행인솔자(TC)', ['여행·투어', '관광 모빌리티·편의']],
+  ['컨벤션기획사', ['MICE·이벤트']],
+  ['호텔경영사·관리사·서비스사', ['숙박·스테이 운영']],
+  ['문화관광해설사', ['관광안내·해설·통역', '문화·역사·유산']],
+  ['국제의료관광코디네이터', ['자연·생태·웰니스']]
+];
+const ct = {
+  pathbar: document.getElementById('ctPathBar'),
+  certSearch: document.getElementById('ctCertSearch'),
+  certList: document.getElementById('ctCertList'),
+  courseIntro: document.getElementById('ctCourseIntro'),
+  courseList: document.getElementById('ctCourseList')
+};
+let ctCertIdx = null;
+const CT_COURSE_INTRO_DEFAULT = '자격증을 선택하면 준비에 필요한 강좌를 추천합니다';
+const CT_RECO_CACHE = new Map();
+
+function ctCoursesFor(categories) {
+  const key = categories.join('|');
+  if (!CT_RECO_CACHE.has(key)) {
+    CT_RECO_CACHE.set(key, rankRecommendations(categories, { minScore: 26, limit: 120, preferFoundation: true }));
+  }
+  return CT_RECO_CACHE.get(key);
+}
+
+function ctRenderPathbar() {
+  let html = '<button type="button" class="' + (ctCertIdx === null ? 'current' : '') + '" data-jump="root">자격증</button>';
+  if (ctCertIdx !== null) {
+    html += '<span class="sep">›</span><button type="button" class="current" data-jump="cert">' + escapeHtml(CERT_LIST[ctCertIdx][0]) + '</button>';
+  }
+  ct.pathbar.innerHTML = html;
+}
+
+function ctRenderCertList(q) {
+  q = (q || '').trim();
+  const pool = CERT_LIST
+    .map((cert, i) => ({ cert, i }))
+    .filter(({ cert }) => !q || cert[0].includes(q));
+  ct.certList.innerHTML = pool.length ? pool.map(({ cert, i }) => {
+    const count = ctCoursesFor(cert[1]).length;
+    return '<button type="button" class="sf-col-item' + (i === ctCertIdx ? ' selected' : '') + '" data-idx="' + i + '">' +
+      '<span class="nm">' + escapeHtml(cert[0]) + '</span>' +
+      '<span class="cnt meta">' + count.toLocaleString() + '</span>' +
+      '<span class="chev">›</span>' +
+    '</button>';
+  }).join('') : '<div class="sf-empty">일치하는 자격증이 없습니다.</div>';
+}
+
+function ctRenderCourses() {
+  const cert = CERT_LIST[ctCertIdx];
+  const cards = ctCoursesFor(cert[1]);
+  ct.courseIntro.innerHTML = '<b>' + escapeHtml(cert[0]) + '</b> 준비 추천 강좌 · ' + cards.length.toLocaleString() + '건';
+  ct.courseList.innerHTML = cards.length
+    ? cards.map(item => courseCardHTML(item.c, item, false)).join('')
+    : '<div class="sf-empty">연결된 강좌가 아직 없습니다.</div>';
+}
+
+function ctReset() {
+  ctCertIdx = null;
+  ct.certSearch.value = '';
+  ctRenderCertList('');
+  ct.courseIntro.textContent = CT_COURSE_INTRO_DEFAULT;
+  ct.courseList.innerHTML = '<div class="sf-col-placeholder">자격증을 선택하세요</div>';
+  ctRenderPathbar();
+}
+
+attachRowToggle(ct.courseList);
+ct.certSearch.addEventListener('input', () => ctRenderCertList(ct.certSearch.value));
+ct.certList.addEventListener('click', (e) => {
+  const btn = e.target.closest('.sf-col-item');
+  if (!btn) return;
+  ctCertIdx = +btn.dataset.idx;
+  ctRenderCertList(ct.certSearch.value);
+  ctRenderCourses();
+  ctRenderPathbar();
+  mobileReveal(ct.courseList.closest('.sf-col'));
+});
+ct.pathbar.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-jump]');
+  if (!btn) return;
+  if (btn.dataset.jump === 'root') ctReset();
 });
 
 // ---- 학교로 찾기: Finder 컬럼뷰 (학교명검색 -> 학교선택 -> 학과선택 -> 추천강좌) ----
@@ -1694,6 +1855,7 @@ sfRenderSchoolList('');
 sfRenderPathbar();
 stReset();
 suReset();
+ctReset();
 setAudience(null);
 setMode('home');
 
