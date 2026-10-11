@@ -904,7 +904,12 @@ window.addEventListener('scroll', syncMobileTopButton, { passive: true });
 window.addEventListener('resize', syncMobileTopButton);
 mobileTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
+const PACKAGE_NOTICE_RE = /본\s*과정은\s*패키지\s*수료증\s*과정으로\s*본\s*과정\s*외\s*\d+개의\s*과정을\s*수료해야\s*수료증을\s*발급\s*받을\s*수\s*있습니다\.\s*하단\s*패키지\s*과정\s*정보를\s*확인해\s*주시기\s*바랍니다\.\s*패키지과정이란\?\s*/g;
+function stripPackageNotice(text) {
+  return String(text || '').replace(PACKAGE_NOTICE_RE, '').trim();
+}
 function courseCardHTML(c, recommendation, isOpen) {
+  const desc = stripPackageNotice(c.d);
   return '<div class="row' + (isOpen ? ' open' : '') + '" data-id="' + c._id + '">' +
     '<div class="row-head">' +
       '<span class="chip ' + c.a + '">' + c.a + '</span>' +
@@ -913,7 +918,7 @@ function courseCardHTML(c, recommendation, isOpen) {
     '</div>' +
     '<div class="row-title">' + escapeHtml(c.t) + '</div>' +
     '<div class="row-detail">' +
-      '<div class="f"><div class="k">강좌설명</div><div class="v">' + (c.d ? escapeHtml(c.d) : '<span class="empty">정보 없음</span>') + '</div></div>' +
+      '<div class="f"><div class="k">강좌설명</div><div class="v">' + (desc ? escapeHtml(desc) : '<span class="empty">정보 없음</span>') + '</div></div>' +
       '<div class="f"><div class="k">강좌목표</div><div class="v">' + (c.o ? escapeHtml(c.o) : '<span class="empty">정보 없음</span>') + '</div></div>' +
       '<div class="f"><div class="k">교육대상</div><div class="v">' + (c.r ? escapeHtml(c.r) : '<span class="empty">정보 없음</span>') + '</div></div>' +
       '<div class="f"><div class="k">강사소개</div><div class="v">' + (c.h ? escapeHtml(c.h) : '<span class="empty">정보 없음</span>') + '</div></div>' +
